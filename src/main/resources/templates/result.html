@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>IP Geolocation Result</title>
+</head>
+<body>
+<h1>Geolocation Result</h1>
+<p>IP Address: <span th:text="${result.ipAddress}"></span></p>
+<p>Country: <span th:text="${result.country}"></span></p>
+<p>City: <span th:text="${result.city}"></span></p>
+<p>Latitude: <span th:text="${result.latitude}"></span></p>
+<p>Longitude: <span th:text="${result.longitude}"></span></p>
+</body>
+</html>
