@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>IP Geolocation Result</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
 </head>
 <body>
 <h1>Geolocation Result</h1>
@@ -11,5 +17,23 @@
 <p>City: <span th:text="${result.city}"></span></p>
 <p>Latitude: <span th:text="${result.latitude}"></span></p>
 <p>Longitude: <span th:text="${result.longitude}"></span></p>
+<div id="map"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<script th:inline="javascript">
+  var latitude = [[${result.latitude}]];
+  var longitude = [[${result.longitude}]];
+
+  var map = L.map('map').setView([latitude, longitude], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+  L.marker([latitude, longitude]).addTo(map)
+          .bindPopup('Location')
+          .openPopup();
+</script>
 </body>
 </html>
