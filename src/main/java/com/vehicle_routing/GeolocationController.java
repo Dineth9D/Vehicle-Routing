@@ -3,7 +3,6 @@ package com.vehicle_routing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +23,8 @@ public class GeolocationController {
     }
 
     @PostMapping("/geolocation")
-    public String getGeolocation(@RequestParam("ipAddress") String ipAddress, Model model) {
-        GeolocationResult result = geolocationService.getGeolocation(ipAddress);
+    public String getGeolocation(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude, Model model) {
+        GeolocationResult result = geolocationService.getGeolocation(latitude, longitude);
         model.addAttribute("result", result);
         return "result";
     }

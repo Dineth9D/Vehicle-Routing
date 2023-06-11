@@ -2,27 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>IP Geolocation Result</title>
+  <title>Geolocation Result</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
   <style>
     #map {
       height: 400px;
+      margin-top: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .result-item {
+      margin-bottom: 10px;
+    }
+
+    .result-item span {
+      font-weight: bold;
+    }
+
+    .result-item-value {
+      margin-left: 10px;
     }
   </style>
 </head>
 <body>
-<h1>Geolocation Result</h1>
-<p>IP Address: <span th:text="${result.ipAddress}"></span></p>
-<p>Country: <span th:text="${result.country}"></span></p>
-<p>City: <span th:text="${result.city}"></span></p>
-<p>Latitude: <span th:text="${result.latitude}"></span></p>
-<p>Longitude: <span th:text="${result.longitude}"></span></p>
-<div id="map"></div>
+<div class="container">
+  <h1>Geolocation Result</h1>
+  <div class="result-item">
+    <span>Latitude:</span>
+    <span class="result-item-value" th:text="${result.latitude}"></span>
+  </div>
+  <div class="result-item">
+    <span>Longitude:</span>
+    <span class="result-item-value" th:text="${result.longitude}"></span>
+  </div>
+  <div class="result-item">
+    <span>City:</span>
+    <span class="result-item-value" th:text="${result.city}"></span>
+  </div>
+  <div class="result-item">
+    <span>Country:</span>
+    <span class="result-item-value" th:text="${result.country}"></span>
+  </div>
+  <div id="map"></div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
 <script th:inline="javascript">
   var latitude = [[${result.latitude}]];
   var longitude = [[${result.longitude}]];
+  var city = [[${result.city}]];
+  var country = [[${result.country}]];
 
   var map = L.map('map').setView([latitude, longitude], 13);
 
@@ -32,7 +72,7 @@
   }).addTo(map);
 
   L.marker([latitude, longitude]).addTo(map)
-          .bindPopup('Location')
+          .bindPopup(city)
           .openPopup();
 </script>
 </body>

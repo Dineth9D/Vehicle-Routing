@@ -1,28 +1,35 @@
 package com.vehicle_routing;
 
 public class GeolocationResult {
-    private String ipAddress;
-    private String country;
-    private String city;
     private double latitude;
     private double longitude;
+    private String city;
+    private String country;
 
-    public GeolocationResult(String ipAddress, String country, String city, double latitude, double longitude) {
-        this.ipAddress = ipAddress;
-        this.country = country;
-        this.city = city;
+
+    public GeolocationResult(double latitude, double longitude, String city, String country) {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.city = city;
+        this.country = country;
+
     }
 
     // Getters and setters
-
-    public String getIpAddress() {
-        return ipAddress;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getCountry() {
@@ -41,19 +48,5 @@ public class GeolocationResult {
         this.city = city;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
 }

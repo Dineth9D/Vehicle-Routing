@@ -7,7 +7,8 @@
 <body>
 <h1>IP Geolocation</h1>
 <form id="ipForm" action="/geolocation" method="POST">
-    <input type="text" name="ipAddress" id="ipAddress" placeholder="Enter IP address" required>
+    <input type="text" name="latitude" id="latitude" placeholder="Enter Latitude" required>
+    <input type="text" name="longitude" id="longitude" placeholder="Enter Longitude" required>
     <button type="submit">Get Location</button>
 </form>
 <div id="result"></div>

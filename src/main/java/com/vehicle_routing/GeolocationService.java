@@ -1,43 +1,41 @@
 package com.vehicle_routing;
 
-import com.maxmind.geoip2.DatabaseReader;
-import com.maxmind.geoip2.model.CityResponse;
-import com.maxmind.geoip2.record.Country;
-import com.maxmind.geoip2.record.Location;
+import com.byteowls.jopencage.JOpenCageGeocoder;
+import com.byteowls.jopencage.model.JOpenCageReverseRequest;
+import com.byteowls.jopencage.model.JOpenCageResponse;
+import com.byteowls.jopencage.model.JOpenCageResult;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
 
 @Component
 public class GeolocationService {
+    private static final String OPENCAGE_API_KEY = "The OpenCage Geocoding API";
 
-    private final DatabaseReader databaseReader;
-
-    public GeolocationService() throws IOException {
-        File database = new File("C:\\Vehicle Routing\\GeoLite2-City.mmdb");
-        this.databaseReader = new DatabaseReader.Builder(database).build();
-    }
-
-    public GeolocationResult getGeolocation(String ipAddress) {
+    public GeolocationResult getGeolocation(double latitude, double longitude) {
         try {
-            InetAddress inetAddress = InetAddress.getByName(ipAddress);
-            CityResponse cityResponse = databaseReader.city(inetAddress);
-            Country country = cityResponse.getCountry();
-            Location location = cityResponse.getLocation();
+            // Create an instance of the JOpenCageGeocoder with your API key
+            JOpenCageGeocoder geocoder = new JOpenCageGeocoder(OPENCAGE_API_KEY);
 
-            // return Geo location result
-            return new GeolocationResult(
-                    ipAddress,
-                    country.getName(),
-                    cityResponse.getCity().getName(),
-                    location.getLatitude(),
-                    location.getLongitude()
-            );
+            // Perform a reverse geocoding lookup based on latitude and longitude
+            JOpenCageReverseRequest request = new JOpenCageReverseRequest(latitude, longitude);
+            JOpenCageResponse response = geocoder.reverse(request);
+
+            // Check if the response was successful
+            if (response.getStatus().getCode() == 200) {
+                // Retrieve the first result
+                JOpenCageResult result = response.getResults().get(0);
+
+                // Retrieve the city name and country
+                String city = result.getComponents().getCity();
+                String country = result.getComponents().getCountry();
+
+                return new GeolocationResult(latitude, longitude, city, country);
+            } else {
+                System.err.println("Geocoding request failed. Status code: " + response.getStatus().getCode());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 }

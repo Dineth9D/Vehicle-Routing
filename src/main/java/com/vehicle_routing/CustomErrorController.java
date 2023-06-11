@@ -18,13 +18,13 @@ public class CustomErrorController implements ErrorController {
             int statusCode = Integer.valueOf(status.toString());
 
             if (statusCode == HttpStatus.FORBIDDEN.value()) {
-                return "templates/error";
+                return "error";
             } else if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "templates/error";
+                return "error";
             } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "templates/error";
+                return "error";
             }
         }
-        return "templates/error";
+        return "error";
     }
 }
