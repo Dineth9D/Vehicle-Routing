@@ -6,7 +6,6 @@ public class GeolocationResult {
     private String city;
     private String country;
 
-
     public GeolocationResult(double latitude, double longitude, String city, String country) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -47,6 +46,5 @@ public class GeolocationResult {
     public void setCity(String city) {
         this.city = city;
     }
-
 
 }

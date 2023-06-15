@@ -1,31 +1,46 @@
 package com.vehicle_routing;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import io.quarkus.qute.CheckedTemplate;
+import io.quarkus.qute.Location;
+import io.quarkus.qute.Template;
+import io.quarkus.qute.TemplateInstance;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
-@Controller
+@ApplicationScoped
+@CheckedTemplate
+@Path("/")
 public class GeolocationController {
 
     private final GeolocationService geolocationService;
 
-    @Autowired
+    @Inject
+    @Location("index.html")
+    Template indexTemplate;
+
+    @Inject
+    @Location("result.html")
+    Template resultTemplate;
+
     public GeolocationController(GeolocationService geolocationService) {
         this.geolocationService = geolocationService;
     }
 
-    @RequestMapping("/")
-    public String index() {
-        return "index.html";
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance index() {
+        return indexTemplate.instance();
     }
 
-    @PostMapping("/geolocation")
-    public String getGeolocation(@RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude, Model model) {
+    @POST
+    @Path("/geolocation")
+    @Produces(MediaType.TEXT_HTML)
+    public TemplateInstance result(
+            @FormParam("latitude") double latitude,
+            @FormParam("longitude") double longitude) {
         GeolocationResult result = geolocationService.getGeolocation(latitude, longitude);
-        model.addAttribute("result", result);
-        return "result";
+        return resultTemplate.data("geolocationResult", result);
     }
 }

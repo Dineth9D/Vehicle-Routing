@@ -1,16 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>IP Geolocation</title>
-</head>
-<body>
-<h1>IP Geolocation</h1>
-<form id="ipForm" action="/geolocation" method="POST">
-    <input type="text" name="latitude" id="latitude" placeholder="Enter Latitude" required>
-    <input type="text" name="longitude" id="longitude" placeholder="Enter Longitude" required>
-    <button type="submit">Get Location</button>
-</form>
-<div id="result"></div>
-</body>
+    <style>
+      main {
+        width: max-content;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      input,
+      button {
+        display: block;
+        margin: 0.5rem 0;
+        padding: 5px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>IP Geolocation</h1>
+      <form id="ipForm" action="/geolocation" method="POST">
+        <input
+          type="text"
+          name="latitude"
+          id="latitude"
+          placeholder="Enter Latitude"
+          required
+        />
+        <input
+          type="text"
+          name="longitude"
+          id="longitude"
+          placeholder="Enter Longitude"
+          required
+        />
+        <button type="submit">Get Location</button>
+      </form>
+      <div id="result"></div>
+    </main>
+  </body>
 </html>
