@@ -41,6 +41,6 @@ public class GeolocationController {
             @FormParam("latitude") double latitude,
             @FormParam("longitude") double longitude) {
         GeolocationResult result = geolocationService.getGeolocation(latitude, longitude);
-        return resultTemplate.data("geolocationResult", result);
+        return resultTemplate.data("result", result);
     }
 }
