@@ -1,79 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Geolocation Result</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <style>
-    #map {
-      height: 400px;
-      margin-top: 20px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Geolocation Result</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <style>
+      #map {
+        height: 400px;
+        margin-top: 20px;
+      }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-    }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-    .result-item {
-      margin-bottom: 10px;
-    }
+      .result-item {
+        margin-bottom: 10px;
+      }
 
-    .result-item span {
-      font-weight: bold;
-    }
+      .result-item span {
+        font-weight: bold;
+      }
 
-    .result-item-value {
-      margin-left: 10px;
-    }
-  </style>
-</head>
-<body>
-<div class="container">
-  <h1>Geolocation Result</h1>
-  <div class="result-item">
-    <span>Latitude:</span>
-    <span class="result-item-value">{result.latitude}</span>
-  </div>
-  <div class="result-item">
-    <span>Longitude:</span>
-    <span class="result-item-value">{result.longitude}</span>
-  </div>
-  <div class="result-item">
-    <span>City:</span>
-    <span class="result-item-value">{result.city}</span>
-  </div>
-  <div class="result-item">
-    <span>Country:</span>
-    <span class="result-item-value">{result.country}</span>
-  </div>
-  <div id="map"></div>
-</div>
+      .result-item-value {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Geolocation Result</h1>
+      <div class="result-item">
+        <span>Latitude:</span>
+        <span class="result-item-value">{result.latitude}</span>
+      </div>
+      <div class="result-item">
+        <span>Longitude:</span>
+        <span class="result-item-value">{result.longitude}</span>
+      </div>
+      <div class="result-item">
+        <span>City:</span>
+        <span class="result-item-value">{result.city}</span>
+      </div>
+      <div class="result-item">
+        <span>Country:</span>
+        <span class="result-item-value">{result.country}</span>
+      </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-  var latitude = {result.latitude};
-  var longitude = {result.longitude};
-  var city = "{result.city}";
-  var country = "{result.country}";
+      <h2>Customer Locations</h2>
+      {#each customerLocations}
+      <div class="result-item">
+        <span>Customer Latitude:</span>
+        <span class="result-item-value">{{this.latitude}}</span>
+      </div>
+      <div class="result-item">
+        <span>Customer Longitude:</span>
+        <span class="result-item-value">{{this.longitude}}</span>
+      </div>
+      <div class="result-item">
+        <span>Customer City:</span>
+        <span class="result-item-value">{{this.city}}</span>
+      </div>
+      <div class="result-item">
+        <span>Customer Country:</span>
+        <span class="result-item-value">{{this.country}}</span>
+      </div>
+      {/each}
 
-  var map = L.map('map').setView([latitude, longitude], 13);
+      <div id="map"></div>
+    </div>
 
-  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-    maxZoom: 18
-  }).addTo(map);
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
+    <script>
+      var latitude = {{result.latitude}};
+      var longitude = {{result.longitude}};
+      var city = "{{result.city}}";
+      var country = "{{result.country}}";
 
-  L.marker([latitude, longitude]).addTo(map)
-    .bindPopup(city)
-    .openPopup();
-</script>
-</body>
+      var map = L.map('map').setView([latitude, longitude], 13);
+
+      L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18
+      }).addTo(map);
+
+      L.marker([latitude, longitude]).addTo(map)
+        .bindPopup(city)
+        .openPopup();
+
+      // Repeat the above code block for each customer location
+      {{#each customerLocations}}
+      var customerLatitude = {{this.latitude}};
+      var customerLongitude = {{this.longitude}};
+      var customerCity = "{{this.city}}";
+      var customerCountry = "{{this.country}}";
+
+      L.marker([customerLatitude, customerLongitude]).addTo(map)
+        .bindPopup(customerCity)
+        .openPopup();
+      {{/each}}
+    </script>
+  </body>
 </html>

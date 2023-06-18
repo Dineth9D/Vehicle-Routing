@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>IP Geolocation</title>
+    <title>Vehicle Routing System</title>
     <style>
       main {
         width: max-content;
@@ -23,20 +23,23 @@
     <main>
       <h1>IP Geolocation</h1>
       <form id="ipForm" action="/geolocation" method="POST">
-        <input
-          type="text"
-          name="latitude"
-          id="latitude"
-          placeholder="Enter Latitude"
-          required
-        />
-        <input
-          type="text"
-          name="longitude"
-          id="longitude"
-          placeholder="Enter Longitude"
-          required
-        />
+        <label for="currentLatitude">Latitude:</label>
+        <input type="text" name="latitude" id="latitude" placeholder="Enter Latitude" required><br>
+
+        <label for="currentLongitude">Longitude:</label>
+        <input type="text" name="longitude" id="longitude" placeholder="Enter Longitude" required><br>
+
+        <h2>Enter Customer Locations</h2>
+        <p>Enter the coordinates for each customer:</p>
+        <ul id="customerList">
+            <li>
+                <label for="customerLatitude">Customer 1 Latitude:</label>
+                <input type="text" id="customerLatitude" name="customerLatitude1" required>
+                <label for="customerLongitude">Longitude:</label>
+                <input type="text" id="customerLongitude" name="customerLongitude1" required>
+            </li>
+            <!-- Repeat the above list item for each customer (customer2, customer3, etc.) -->
+        </ul>
         <button type="submit">Get Location</button>
       </form>
       <div id="result"></div>

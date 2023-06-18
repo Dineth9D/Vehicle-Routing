@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class GeolocationService {
-    private static final String OPENCAGE_API_KEY = "key";
+    private static final String OPENCAGE_API_KEY = "be7f19f7d5c94ff8b50712ec4dff9083";
     private final JOpenCageGeocoder geocoder;
 
     public GeolocationService() {

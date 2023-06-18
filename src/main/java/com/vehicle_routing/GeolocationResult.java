@@ -5,6 +5,8 @@ public class GeolocationResult {
     private double longitude;
     private String city;
     private String country;
+    private double customerLatitude1;
+    private double customerLongitude1;
 
     public GeolocationResult(double latitude, double longitude, String city, String country) {
         this.latitude = latitude;
@@ -45,6 +47,14 @@ public class GeolocationResult {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public double getCustomerLatitude1() {
+        return customerLatitude1;
+    }
+
+    public double getCustomerLongitude1() {
+        return customerLongitude1;
     }
 
 }
