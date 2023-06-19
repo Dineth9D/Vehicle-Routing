@@ -5,15 +5,14 @@ public class GeolocationResult {
     private double longitude;
     private String city;
     private String country;
-    private double customerLatitude1;
-    private double customerLongitude1;
+    private double customerLatitude;
+    private double customerLongitude;
 
     public GeolocationResult(double latitude, double longitude, String city, String country) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.city = city;
         this.country = country;
-
     }
 
     // Getters and setters
@@ -48,13 +47,21 @@ public class GeolocationResult {
     public void setCity(String city) {
         this.city = city;
     }
-
-    public double getCustomerLatitude1() {
-        return customerLatitude1;
+    
+    public double getCustomerLatitude() {
+        return customerLatitude;
     }
 
-    public double getCustomerLongitude1() {
-        return customerLongitude1;
+    public void setCustomerLatitude(double customerLatitude) {
+        this.customerLatitude = customerLatitude;
+    }
+
+    public double getCustomerLongitude() {
+        return customerLongitude;
+    }
+
+    public void setCustomerLongitude(double customerLongitude) {
+        this.customerLongitude = customerLongitude;
     }
 
 }

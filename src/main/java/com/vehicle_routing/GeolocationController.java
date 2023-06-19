@@ -37,25 +37,37 @@ public class GeolocationController {
         return indexTemplate.instance();
     }
 
+
     @POST
     @Path("/geolocation")
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance processGeolocationRequest(
             @FormParam("latitude") double latitude,
-            @FormParam("longitude") double longitude,
-            @FormParam("customerLatitude1") double customerLatitude1,
-            @FormParam("customerLongitude1") double customerLongitude1
-    // Repeat the above parameters for each customer (customerLatitude2,
-    // customerLongitude2, etc.)
+            @FormParam("longitude") double longitude
     ) {
         GeolocationResult result = geolocationService.getGeolocation(latitude, longitude);
 
-        // Retrieve geolocation for each customer
-        List<GeolocationResult> customerLocations = new ArrayList<>();
-        GeolocationResult customerLocation1 = geolocationService.getGeolocation(customerLatitude1, customerLongitude1);
-        customerLocations.add(customerLocation1);
-        // Add geolocation for each customer to the customerLocations list
+        List<GeolocationResult> customerLocations = generateCustomerLocations();
 
         return resultTemplate.data("result", result).data("customerLocations", customerLocations);
     }
+
+    private List<GeolocationResult> generateCustomerLocations() {
+        List<GeolocationResult> customerLocations = new ArrayList<>();
+
+        // Generate sample latitudes and longitudes for customers
+        double[] sampleLatitudes = {7.4833314, 7.087310, 6.585395};
+        double[] sampleLongitudes = {80.3666652, 80.014366, 79.960739};
+
+        for (int i = 0; i < sampleLatitudes.length; i++) {
+            double customerLatitude = sampleLatitudes[i];
+            double customerLongitude = sampleLongitudes[i];
+            GeolocationResult customerLocation = geolocationService.getGeolocation(customerLatitude, customerLongitude);
+            customerLocation.setCustomerLatitude(customerLatitude);
+            customerLocation.setCustomerLongitude(customerLongitude);
+            customerLocations.add(customerLocation);
+        }
+        return customerLocations;
+    }
+
 }
