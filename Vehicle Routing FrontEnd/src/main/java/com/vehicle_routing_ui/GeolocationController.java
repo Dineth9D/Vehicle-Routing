@@ -29,6 +29,7 @@ public class GeolocationController {
             @RequestParam("longitude") double longitude,
             @RequestParam("resultJson") String resultJson,
             @RequestParam("customerLocationsJson") String customerLocationsJson,
+            @RequestParam("possibleRoutesJson") String possibleRoutesJson,
             Model model
     ) throws JsonProcessingException {
 
@@ -38,10 +39,13 @@ public class GeolocationController {
         // Parse geolocation data and customer locations from request parameters
         GeolocationResult result = objectMapper.readValue(resultJson, GeolocationResult.class);
         List<GeolocationResult> customerLocations = objectMapper.readValue(customerLocationsJson, new TypeReference<List<GeolocationResult>>() {});
-
+        
+        List<List<GeolocationResult>> possibleRoutes = objectMapper.readValue(possibleRoutesJson, new TypeReference<List<List<GeolocationResult>>>() {});
+        
         // Store geolocation data and customer locations in the model
         model.addAttribute("result", result);
         model.addAttribute("customerLocations", customerLocations);
+        model.addAttribute("possibleRoutes", possibleRoutes);
 
         // Render the result.html template with the data from the model
         return "result";

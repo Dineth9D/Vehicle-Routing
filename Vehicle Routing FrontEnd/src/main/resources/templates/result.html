@@ -30,6 +30,15 @@
       <span class="result-item-value" th:text="${customerLocation.customerLongitude}"></span>
     </div>
   </div>
+
+  <h2>Possible Routes</h2>
+  <div id="possible-routes" th:each="route : ${possibleRoutes}">
+    <div class="result-item">
+      <span>Route:</span>
+      <ul th:each="location : ${route}">
+        <li><span th:text="${location.latitude}"></span>,<span th:text="${location.longitude}"></span></li>
+      </ul>
+    </div>
 </div>
 <div id="map"></div>
 
