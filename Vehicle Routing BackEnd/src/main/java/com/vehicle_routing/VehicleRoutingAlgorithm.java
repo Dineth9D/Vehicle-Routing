@@ -13,7 +13,7 @@ public class VehicleRoutingAlgorithm {
         this.possibleRoutes = new ArrayList<>();
     }
 
-    public List<List<CustomerLocation>> calculateRoutes(double[] customerLatitudes, double[] customerLongitudes, double vehicleLatitude, double vehicleLongitude) {
+    public List<CustomerLocation> calculateRoutes(double[] customerLatitudes, double[] customerLongitudes, double vehicleLatitude, double vehicleLongitude) {
         // Create customer locations based on provided latitudes and longitudes
         for (int i = 0; i < customerLatitudes.length; i++) {
             CustomerLocation customerLocation = new CustomerLocation(customerLatitudes[i], customerLongitudes[i]);
@@ -21,15 +21,25 @@ public class VehicleRoutingAlgorithm {
         }
 
         // Start the permutation algorithm
-        permute(new ArrayList<>(), customerLocations, new VehicleLocation(vehicleLatitude, vehicleLongitude));
+        List<CustomerLocation> bestRoute = new ArrayList<>();
+        double bestDistance = Double.MAX_VALUE;
+        CustomerLocation startingLocation = new CustomerLocation(vehicleLatitude, vehicleLongitude);
+        permute(new ArrayList<>(), customerLocations, startingLocation, bestRoute, bestDistance);
 
-        return possibleRoutes;
+        return bestRoute;
     }
 
-    private void permute(List<CustomerLocation> route, List<CustomerLocation> remainingLocations, VehicleLocation currentLocation) {
-        // If there are no remaining locations, add the current route to the list of possible routes
+
+
+    private void permute(List<CustomerLocation> route, List<CustomerLocation> remainingLocations, CustomerLocation currentLocation, List<CustomerLocation> bestRoute, double bestDistance) {
+        // If there are no remaining locations, check if the current route is better than the best route
         if (remainingLocations.isEmpty()) {
-            possibleRoutes.add(new ArrayList<>(route));
+            double currentDistance = calculateTotalDistance(route);
+            if (currentDistance < bestDistance) {
+                bestRoute.clear();
+                bestRoute.addAll(route);
+                bestDistance = currentDistance;
+            }
         } else {
             for (int i = 0; i < remainingLocations.size(); i++) {
                 CustomerLocation nextLocation = remainingLocations.get(i);
@@ -43,27 +53,33 @@ public class VehicleRoutingAlgorithm {
                 List<CustomerLocation> updatedRemainingLocations = new ArrayList<>(remainingLocations);
                 updatedRemainingLocations.remove(i);
 
-                // Create a new VehicleLocation object using the latitude and longitude values of the next location
-                VehicleLocation nextVehicleLocation = new VehicleLocation(nextLocation.getLatitude(), nextLocation.getLongitude());
-
                 // Recursively call the permutation algorithm with the updated inputs
-                permute(updatedRoute, updatedRemainingLocations, nextVehicleLocation);
+                permute(updatedRoute, updatedRemainingLocations, nextLocation, bestRoute, bestDistance);
             }
         }
     }
 
 
-    private double calculateDistance(VehicleLocation location1, CustomerLocation location2) {
-    double earthRadius = 6371; // Radius of the earth in km
-    double latDistance = Math.toRadians(location2.getLatitude() - location1.getLatitude());
-    double lonDistance = Math.toRadians(location2.getLongitude() - location1.getLongitude());
-    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-            + Math.cos(Math.toRadians(location1.getLatitude())) * Math.cos(Math.toRadians(location2.getLatitude()))
-            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    double distance = earthRadius * c; // Distance in km
-    return distance;
-}
+    private double calculateDistance(CustomerLocation location1, CustomerLocation location2) {
+        double earthRadius = 6371; // Radius of the earth in km
+        double latDistance = Math.toRadians(location2.getLatitude() - location1.getLatitude());
+        double lonDistance = Math.toRadians(location2.getLongitude() - location1.getLongitude());
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(location1.getLatitude())) * Math.cos(Math.toRadians(location2.getLatitude()))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = earthRadius * c; // Distance in km
+        return distance;
+    }
+
+
+    private double calculateTotalDistance(List<CustomerLocation> route) {
+        double totalDistance = 0;
+        for (int i = 0; i < route.size() - 1; i++) {
+            totalDistance += calculateDistance(route.get(i), route.get(i + 1));
+        }
+        return totalDistance;
+    }
 
 }
 

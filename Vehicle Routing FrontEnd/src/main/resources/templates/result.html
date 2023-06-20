@@ -31,15 +31,13 @@
     </div>
   </div>
 
-  <h2>Possible Routes</h2>
-  <div id="possible-routes" th:each="route : ${possibleRoutes}">
+  <h2>Best Route</h2>
     <div class="result-item">
       <span>Route:</span>
-      <ul th:each="location : ${route}">
+      <ul th:each="location : ${bestRoute}">
         <li><span th:text="${location.latitude}"></span>,<span th:text="${location.longitude}"></span></li>
       </ul>
     </div>
-</div>
 <div id="map"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>

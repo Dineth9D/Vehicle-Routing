@@ -40,12 +40,12 @@ public class GeolocationController {
         GeolocationResult result = objectMapper.readValue(resultJson, GeolocationResult.class);
         List<GeolocationResult> customerLocations = objectMapper.readValue(customerLocationsJson, new TypeReference<List<GeolocationResult>>() {});
         
-        List<List<GeolocationResult>> possibleRoutes = objectMapper.readValue(possibleRoutesJson, new TypeReference<List<List<GeolocationResult>>>() {});
+        List<GeolocationResult> bestRoute = objectMapper.readValue(possibleRoutesJson, new TypeReference<List<GeolocationResult>>() {});
         
         // Store geolocation data and customer locations in the model
         model.addAttribute("result", result);
         model.addAttribute("customerLocations", customerLocations);
-        model.addAttribute("possibleRoutes", possibleRoutes);
+        model.addAttribute("bestRoute", bestRoute);
 
         // Render the result.html template with the data from the model
         return "result";

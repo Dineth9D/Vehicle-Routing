@@ -47,12 +47,13 @@ public class GeolocationController {
             // Calculate possible routes for vehicle
             double[] sampleLatitudes = {7.4833314, 7.087310, 6.585395, 6.705574, 7.291418, 7.2523};
             double[] sampleLongitudes = {80.3666652, 80.014366, 79.960739, 80.384734, 80.636696, 80.3436};
-            List<List<CustomerLocation>> possibleRoutes = vehicleRoutingAlgorithm.calculateRoutes(sampleLatitudes, sampleLongitudes, latitude, longitude);
+            List<CustomerLocation> bestRoute = vehicleRoutingAlgorithm.calculateRoutes(sampleLatitudes, sampleLongitudes, latitude, longitude);
+
 
             // Convert geolocation data and customer locations to JSON strings
             String resultJson = objectMapper.writeValueAsString(result);
             String customerLocationsJson = objectMapper.writeValueAsString(customerLocations);
-            String possibleRoutesJson = objectMapper.writeValueAsString(possibleRoutes);
+            String possibleRoutesJson = objectMapper.writeValueAsString(bestRoute);
 
             // Send data to the Spring Boot server
             String springBootServerURL = "http://localhost:8081/geolocation";
