@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Geolocation Result</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 400px;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
@@ -25,5 +31,29 @@
     </div>
   </div>
 </div>
+<div id="map"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+<script th:inline="javascript">
+  var latitude = /*[[${result.latitude}]]*/;
+  var longitude = /*[[${result.longitude}]]*/;
+  var customerLocations = /*[[${customerLocations}]]*/;
+
+  var map = L.map('map').setView([latitude, longitude], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+    maxZoom: 18
+  }).addTo(map);
+
+  L.marker([latitude, longitude]).addTo(map)
+    .bindPopup('Vehicle Location')
+    .openPopup();
+
+  customerLocations.forEach(function (location) {
+    var customerMarker = L.marker([location.customerLatitude, location.customerLongitude]).addTo(map);
+    customerMarker.bindPopup('Customer Location');
+  });
+</script>
 </body>
 </html>
