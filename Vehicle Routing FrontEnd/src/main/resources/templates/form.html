@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geolocation Form</title>
+</head>
+<body>
+    <h1>Geolocation Form</h1>
+    <form action="http://localhost:8081/geolocation" method="post">
+        <label for="latitude">Latitude:</label>
+        <input type="text" id="latitude" name="latitude"><br><br>
+        <label for="longitude">Longitude:</label>
+        <input type="text" id="longitude" name="longitude"><br><br>
+        <input type="hidden" id="resultJson" name="resultJson" value="{"latitude":6.927079,"longitude":79.861244,"city":"Colombo","country":"Sri Lanka"}">
+        <input type="hidden" id="customerLocationsJson" name="customerLocationsJson" value="[...]">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

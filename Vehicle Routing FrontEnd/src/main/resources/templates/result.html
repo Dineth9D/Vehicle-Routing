@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Geolocation Result</title>
+</head>
+<body>
+<div class="container">
+  <h1>Geolocation Result</h1>
+  <h2>Vehicle Location</h2>
+  <p>Latitude: <span th:text="${result.latitude}"></span></p>
+  <p>Longitude: <span th:text="${result.longitude}"></span></p>
+  <p>City: <span th:text="${result.city}"></span></p>
+  <p>Country: <span th:text="${result.country}"></span></p>
+
+  <h2>Customer Locations</h2>
+  <div id="customer-locations" th:each="customerLocation : ${customerLocations}">
+    <div class="result-item">
+      <span>Customer Latitude:</span>
+      <span class="result-item-value" th:text="${customerLocation.customerLatitude}"></span>
+    </div>
+    <div class="result-item">
+      <span>Customer Longitude:</span>
+      <span class="result-item-value" th:text="${customerLocation.customerLongitude}"></span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+2023-06-20 09:32:28,681 dineth vehicle-routing-dev.jar[14000] INFO  [io.quarkus] (Quarkus Main Thread) vehicle-routing 1.0-SNAPSHOT on JVM (powered by Quarkus 3.1.1.Final) started in 5.389s. Listening on: http://localhost:8080
+2023-06-20 09:32:28,686 dineth vehicle-routing-dev.jar[14000] INFO  [io.quarkus] (Quarkus Main Thread) Profile dev activated. Live Coding activated.
+2023-06-20 09:32:28,688 dineth vehicle-routing-dev.jar[14000] INFO  [io.quarkus] (Quarkus Main Thread) Installed features: [cdi, qute, rest-client, resteasy-reactive, resteasy-reactive-qute, smallrye-context-propagation, vertx, webjars-locator]
+2023-06-20 09:34:06,475 dineth vehicle-routing-dev.jar[14000] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) File change detected: C:\Vehicle Routing\src\main\resources\application.properties
+2023-06-20 09:34:06,484 dineth vehicle-routing-dev.jar[14000] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Restarting quarkus due to changes in application.properties.
+2023-06-20 09:34:06,547 dineth vehicle-routing-dev.jar[14000] INFO  [io.quarkus] (Quarkus Main Thread) vehicle-routing stopped in 0.053s
